@@ -75,10 +75,9 @@ public function getid($rut)
 		{
 
 
-			$x= $this->getid($rut);
 
-			$this->database->query("insert into test (variable) 
-		values ('$x');");
+
+			$this->database->query("delete from alumno where rut = $rut;");
 
 	}
 
