@@ -1,0 +1,9 @@
+<table>
+			<tr><td> RUT </td><td> NOMBRE </td><td> CARRERA </td><td> USUARIO </td><td> PASSWORD </td></tr>
+			{% for al in alumno%}
+				<tr>
+					<td> {{alumno["rut"]}} </td>
+					<td> {{alumno["nombre"]}} </td>
+					<td> {{alumno["carrera"]}} </td><td> {{alumno["usuario"]}} </td><td> {{alumno["password"]}} </td></tr>
+			{% endfor%}
+		</table>

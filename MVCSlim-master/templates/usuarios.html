@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Usuarios</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<style type="text/css">
+		td,th{
+			text-align: center;
+		}
+		#texto_total{
+			text-align: right;
+			font-weight: bold;
+		}
+		.item{
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<h2>Alumno</h2>
+
+		<table>
+			<tr>
+				<td> Rut </td>
+				<td> <input type="text" id="rut" required> </td>
+			</tr>
+			
+			<tr>
+				<td> Nombre </td>
+				<td> <input type="text" id="nombre" required> </td>
+			</tr>
+
+			<tr>
+				<td> Carrera </td>
+				<td> <input type="text" id="carrera" required> </td>
+			</tr>
+			
+			<tr>
+				<td> Usuario </td>
+				<td> <input type="text" id="usuario" required> </td>
+			</tr>
+
+			<tr>
+				<td> Password </td>
+				<td> <input type="text" id="pass" required> </td>
+			</tr>
+		</table>
+		<br><br><br>
+		<input type="button" id="agregar" value="Agregar">
+		<input type="button" id="modificar" value="Modificar">
+		<input type="button" id="eliminar" value="Eliminar">
+		<br><br><br>
+		<div id="dvdetalle">
+		<table>
+			<tr><td> RUT </td><td> NOMBRE </td><td> CARRERA </td><td> USUARIO </td><td> PASSWORD </td></tr>
+			{% for al in alumno%}
+				<tr>
+					<td> {{alumno["rut"]}} </td>
+					<td> {{alumno["nombre"]}} </td>
+					<td> {{alumno["carrera"]}} </td><td> {{alumno["usuario"]}} </td><td> {{alumno["password"]}} </td></tr>
+			{% endfor%}
+		</table>
+		</div>
+	</div>
+</body>	
+</html>
+
+<script>
+$("#agregar").click(function(){
+    $.post( "/actusuario1",
+                { 	rut: $("#rut").val(),
+                	nombre: $("#nombre").val(),
+                	carrera: $("#carrera").val(),
+                	usuario: $("#usuario").val(),
+                	password: $("#pass").val(),
+                	operacion: "grabar"
+                },
+        function(data,status){
+          if (status=="success"){ 
+            $("#dvdetalle").html(data);
+          } else { 
+            mensaje("problema al actualizar el registro!");
+          }   
+        });
+  });
+
+$("#modificar").click(function(){
+	$.post(	"/actusuario1", 
+			{	rut: $("#rut").val(),
+                	nombre: $("#nombre").val(),
+                	carrera: $("#carrera").val(),
+                	usuario: $("#usuario").val(),
+                	password: $("#pass").val(),
+                operacion: "modificar"
+			},
+			function(data,status){
+	          if (status=="success"){ 
+	            $("#dvdetalle").html(data);
+	          } else { 
+	            mensaje("problema al actualizar el registro!");
+	          }   
+	        });
+});
+
+$("#eliminar").click(function(){
+	$.post(	"/actusuario1", 
+			{	rut: $("#rut").val(),
+                operacion: "eliminar"
+			},
+			function(data,status){
+				alert(data);
+	          if (status=="success"){ 
+	            $("#dvdetalle").html(data);
+	          } else { 
+	            mensaje("problema al eliminar el registro!");
+	          }   
+	        });
+});
+
+</script>
